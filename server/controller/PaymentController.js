@@ -3,11 +3,12 @@ import Stripe from "stripe";
 import Payment from "../model/Payment.js";
 import { payingUser } from "../store/Paying.js";
 import User from "../model/User.js";
-import dotenv from "dotenv"
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
-const stripe = new Stripe("sk_test_51OaXpeDgHezqQ0kofel67ImiykUrh1NZlDTIlsXAaxx1bgyJxQuoaRRBdSIU2QqqSsQToI2Hoefeorpmtt3SnVft00k7kWwDBA");
-
+const stripe = new Stripe(
+  "sk_test_51OaXpeDgHezqQ0kofel67ImiykUrh1NZlDTIlsXAaxx1bgyJxQuoaRRBdSIU2QqqSsQToI2Hoefeorpmtt3SnVft00k7kWwDBA"
+);
 
 // export const getPayment = async (r)
 
@@ -16,7 +17,7 @@ export const createPayment = async (req, res) => {
   console.log(order);
   payingUser.plan = order.plan;
   payingUser.user_id = order.user_id;
-  payingUser.site = order.site
+  payingUser.site = order.site;
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -34,37 +35,23 @@ export const createPayment = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `https://mealfixer.onrender.com/success.html`,
-      cancel_url: `https://mealfixer.onrender.com/failure.html`,
+      success_url: `http://localhost:4000/success`,
+      cancel_url: `http://localhost:4000/cancel`,
     });
     const payment = await Payment.create({
       user_id: order.user_id,
       plan: order.plan,
       amount: 10,
-      paid: true
-    })
-    
-    await payment.save()
+      paid: true,
+    });
+
+    await payment.save();
     res.json({ url: session.url }).status(200);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
-
-export const checkSubs = async (req, res) => {
-  try {
-    const user = await User.findOne({ _id: data.user_id });
-    if(user.requests > 0){
-      res.json({message: true}).status(200)
-    }else{
-      res.json({message: false}).status(400)
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
 
 export const success = async (req, res) => {
   try {
@@ -78,6 +65,26 @@ export const success = async (req, res) => {
       res.json({ message: "User not found" });
     }
 
+    let requests;
+    switch (user.plan) {
+      case "free":
+        requests = 10;
+        break;
+      case "subscription-1":
+        requests = 20;
+        break;
+      case "subscription-2":
+        requests = 30;
+        break;
+      case "subscription-3":
+        requests = 40;
+        break;
+
+      default:
+        request = 10;
+        break;
+    }
+
     //update the user details in the db
     user.plan = data.plan;
     await user.save();
@@ -87,7 +94,7 @@ export const success = async (req, res) => {
 
     //redirecting the user to the dashboard
     setTimeout(() => {
-      res.redirect(303, `${payingUser.site}`);
+      res.redirect(303, `http://localhost:4000/success.html`);
     }, 3000);
   } catch (error) {
     console.error(error);
@@ -97,5 +104,5 @@ export const success = async (req, res) => {
 
 export const cancel = async (req, res) => {
   //redirect to the dashboard
-  res.redirect(303, `${payingUser.site}`);
+  res.redirect(303, `http://localhost:4000/failure.html`);
 };

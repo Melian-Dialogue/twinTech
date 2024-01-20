@@ -12,24 +12,6 @@ const signup = async (req, res, next) => {
   const { username, email, password, project, site, plan } = req.body;
   currentSite = site;
   let requests = 0
-  switch (plan) {
-    case "free":
-      requests = 10
-      break;
-    case "subscription-1":
-      requests = 20
-      break;  
-    case "subscription-2":
-        requests = 30
-    break; 
-    case "subscription-3":
-      requests = 40
-      break;       
-  
-    default:
-      request = 10
-      break;
-  }
 
   try {
     const hash = await bcrypt.hash(password, 10);
@@ -247,7 +229,7 @@ const updateRequests = async (req, res) => {
 
     const user = await User.findById(userId);
 
-    user.requests += 1
+    user.requests -= 1
     await user.save()
     res.status(200).json({ i: "incremented request"})
   } catch (error) {

@@ -811,9 +811,7 @@
                 class="mb-8 max-w-[270px] text-base text-gray-7 mt-10"
                 style="margin: 30px 0"
               >
-                Join Mealfixer today and redefine your recruitment journey.
-                Experience the future of talent acquisition with our AI-driven
-                platform.
+              Embark on a Flavorful Journey with Mealfixer: Redefine Your Culinary Adventure and Explore the AI-Powered Future of Meal Planning.
               </p>
               <div class="-mx-3 flex items-center">
                 <a
@@ -1417,21 +1415,52 @@
 
           // Send data to localhost:3000 (Replace with your actual endpoint)
           try {
-            const res = await axios.post(
-              `https://kevkibe-mealfixr.onrender.com/generate_mealplan`,
-              formData,
+
+            let userData = localStorage.getItem('userInfo')
+            userData = JSON.parse(userData);
+            const userDetails = await axios.get(
+              `http://localhost:4000/user`,
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + userData.token
+                } 
+              }
             );
-            console.log(formData);
 
-            response.style.color = "green";
-            response.style.margin = "10px 0";
-            response.textContent = "Successfully signed up! Please check your inbox for further Instructions";
-            loader.style.display = "none";
-            // Handle the response from the server if needed
-            // window.location.href = "https://headhuntrs.co.uk/signin.html";
+            let p = userDetails.data
+            if(p.user.requests > 0){
+                const res = await axios.post(
+                `https://kevkibe-mealfixr.onrender.com/generate_mealplan`,
+                formData,
+              );
 
-            document.getElementById("container").hidden = true
-            document.getElementById("ans").innerHTML = res.data.meal_plan.trim()
+              response.style.color = "green";
+              response.style.margin = "10px 0";
+              response.textContent = "Successfully signed up! Please check your inbox for further Instructions";
+              loader.style.display = "none";
+              // Handle the response from the server if needed
+              // window.location.href = "https://headhuntrs.co.uk/signin.html";
+
+              //reduce request count
+              let userData = localStorage.getItem('userInfo')
+              userData = JSON.parse(userData);
+              const requestCount = await axios.get(
+                `http://localhost:4000/update-requests`,
+                {
+                  headers: {
+                    'Authorization': 'Bearer ' + userData.token
+                  } 
+                }
+              );
+
+              document.getElementById("container").hidden = true
+              document.getElementById("ans").innerHTML = res.data.meal_plan.trim()
+            }else{
+              loader.style.display = "none";
+              response.style.color = "red";
+              response.textContent = "You have no active of sub-scriptions";
+            }
+
 
 
           } catch (error) {
