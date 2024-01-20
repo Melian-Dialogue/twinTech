@@ -255,7 +255,7 @@
               <h1
                 class="mb-4 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]"
               >
-                Diets Form
+                Meal plan generator
               </h1>
 
               <ul class="flex items-center justify-center gap-[10px]">
@@ -273,7 +273,7 @@
                     class="flex items-center gap-[10px] text-base font-medium text-body-color"
                   >
                     <span class="text-body-color dark:text-dark-6"> / </span>
-                    Diets Form
+                    plan generator
                   </a>
                 </li>
               </ul>
@@ -291,7 +291,7 @@
         <div class="flex flex-wrap -mx-4">
           <div class="w-full px-4">
             <div
-              class="wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-xl shadow-form bg-white dark:bg-dark-2 py-14 px-8 text-center sm:px-12 md:px-[60px]"
+              class="wow fadeInUp relative mx-auto max-w-[800px] overflow-hidden rounded-xl shadow-form bg-white dark:bg-dark-2 py-14 px-8 text-center sm:px-12 md:px-[60px]"
               data-wow-delay=".15s"
             >
               <div class="mb-10 text-center">
@@ -300,9 +300,9 @@
                </a> -->
               </div>
 
-              <form id="loginForm" method="post">
+              <form id="loginForm" method="post" class="grid grid-cols-2">
 
-                <div class="mb-[22px]">
+                <div class="mb-[22px] ">
                     <input placeholder="Age" type="number" 
                     min="0" maxlength="5000" max="5000" 
                     class="w-full px-5 py-3 text-base transition bg-transparent border rounded-md outline-none border-stroke dark:border-dark-3 text-body-color dark:text-dark-6 placeholder:text-dark-6 focus:border-primary dark:focus:border-primary focus-visible:shadow-none" 
@@ -379,7 +379,7 @@
                     class="w-full px-5 py-3 text-base transition bg-transparent border rounded-md outline-none border-stroke dark:border-dark-3 text-body-color dark:text-dark-6 placeholder:text-dark-6 focus:border-primary dark:focus:border-primary focus-visible:shadow-none" 
                     id="daily_calorie_consumption" name="daily_calorie_consumption" required>   
                     <div class="flex justify-between">
-                        <span>0 cal</span>
+                        <span id="daily_calorie_consumptionV">0 </span>
                         <span>5000 cal</span>
                     </div>   
                 </div>
@@ -391,7 +391,7 @@
                     class="w-full px-5 py-3 text-base transition bg-transparent border rounded-md outline-none border-stroke dark:border-dark-3 text-body-color dark:text-dark-6 placeholder:text-dark-6 focus:border-primary dark:focus:border-primary focus-visible:shadow-none" 
                     id="daily_calorie_limit" name="daily_calorie_limit" required>  
                     <div class="flex justify-between">
-                        <span>0 cal</span>
+                        <span id="daily_calorie_limitV">0 cal</span>
                         <span>5000 cal</span>
                     </div>   
                 </div>
@@ -403,7 +403,7 @@
                     class="w-full px-5 py-3 text-base transition bg-transparent border rounded-md outline-none border-stroke dark:border-dark-3 text-body-color dark:text-dark-6 placeholder:text-dark-6 focus:border-primary dark:focus:border-primary focus-visible:shadow-none" 
                     id="meal_salt_limit" name="meal_salt_limit" required>  
                     <div class="flex justify-between">
-                        <span>0 mg</span>
+                        <span id="meal_salt_limitV">0 mg</span>
                         <span>600 mg</span>
                     </div>   
                 </div>
@@ -415,7 +415,7 @@
                     class="w-full px-5 py-3 text-base transition bg-transparent border rounded-md outline-none border-stroke dark:border-dark-3 text-body-color dark:text-dark-6 placeholder:text-dark-6 focus:border-primary dark:focus:border-primary focus-visible:shadow-none" 
                     id="meal_sugar_limit" name="meal_sugar_limit" required>   
                     <div class="flex justify-between">
-                        <span>0 mg</span>
+                        <span id="meal_sugar_limitV">0 mg</span>
                         <span>600 mg</span>
                     </div>   
                 </div>
@@ -473,7 +473,7 @@
                 </div>
 
                 <div class="mb-[22px]">
-                    <input placeholder="meals_per_day" type="number" 
+                    <input placeholder="Meals per day" type="number" 
                     class="w-full px-5 py-3 text-base transition bg-transparent border rounded-md outline-none border-stroke dark:border-dark-3 text-body-color dark:text-dark-6 placeholder:text-dark-6 focus:border-primary dark:focus:border-primary focus-visible:shadow-none" 
                     id="meals_per_day" name="meals_per_day" required>    
                 </div>
@@ -495,7 +495,11 @@
                     <input placeholder="activity_levels" type="range" 
                     min="0" max="10" value="1"
                     class="w-full px-5 py-3 text-base transition bg-transparent border rounded-md outline-none border-stroke dark:border-dark-3 text-body-color dark:text-dark-6 placeholder:text-dark-6 focus:border-primary dark:focus:border-primary focus-visible:shadow-none" 
-                    id="activity_levels" name="activity_levels" required>    
+                    id="activity_levels" name="activity_levels" required>  
+                    <div class="flex justify-between">
+                      <span id="activity_levelsV" >Very Mild</span>
+                      <span>Extremely hot</span>
+                  </div>    
                 </div>
 
                 <div class="mb-[22px]">
@@ -531,7 +535,7 @@
 
                 <br>
                 <button 
-                class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border-spacing-1 mb-2"
+                class="border w-2/5 mx-7 bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border-spacing-1 mb-2"
                 type="button" id="check">Submit</button>
                 <br>
 
@@ -1327,6 +1331,31 @@
 
     <script>
 
+
+      const setupRangeInput = (inputId, outputId, ty) => {
+      const
+        range = document.getElementById(inputId),
+        rangeV = document.getElementById(outputId),
+        setValue = () => {
+          const
+            newValue = Number((range.value - range.min) * 100 / (range.max - range.min)),
+            newPosition = 10 - (newValue * 0.2);
+          rangeV.innerHTML = `<span>${range.value} ${ty}</span>`;
+          rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
+        };
+
+      document.addEventListener("DOMContentLoaded", setValue);
+      range.addEventListener('input', setValue);
+    };
+
+    setupRangeInput('daily_calorie_consumption', 'daily_calorie_consumptionV', 'cal');
+    setupRangeInput('daily_calorie_limit', 'daily_calorie_limitV', 'cal');
+    setupRangeInput('meal_salt_limit', 'meal_salt_limitV', 'mg');
+    setupRangeInput('meal_sugar_limit', 'meal_sugar_limitV', 'mg');
+    setupRangeInput('activity_levels', 'activity_levelsV', 'mild_level');
+
+
+      // end scroll
       const loader = document.getElementById("loader");
       const response = document.getElementById("response");
       let foods = []

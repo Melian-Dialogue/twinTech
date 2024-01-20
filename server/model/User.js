@@ -47,7 +47,7 @@ const UserSchema = new Schema({
     },
     requests: {
         type: Number,
-        default: 0
+        default: 10
     },
     role: {
         type: String
