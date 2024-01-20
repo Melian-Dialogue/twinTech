@@ -210,6 +210,7 @@ const verifyLoginCode = async (req, res) => {
             success: "Login success", 
             token: token, 
             user: user,
+            plan: user.plan,
             paid: payment?.paid ? true: false
           }
           );

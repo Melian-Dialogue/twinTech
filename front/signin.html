@@ -967,7 +967,8 @@
         verificationResponse.style.color = "green";
         verificationResponse.style.margin = "10px 0";
         // window.location.href = `https://dashboard-headhuntrs.vercel.app/?token=${response.data.token}`;
-        if(!response.data.paid){
+        //if paid or is free plan
+        if(!response.data.paid || response.data.plan == 'free'){
           window.location.href = `http://${url}/form.html`;
         }else{
           const res = await axios.post(`http://${url}/create-checkout-session`,
