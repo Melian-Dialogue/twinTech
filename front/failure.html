@@ -1,0 +1,199 @@
+
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+  </head>
+  <style>
+    html, body {
+font-family: "Arial" , monospace !important;
+height: 100%;
+padding-top: 0vh;
+margin:0px;
+text-spacing:1px;
+line-height:30px
+}
+
+.container {
+height: auto;
+width: 100%;
+justify-content: center;
+align-item: center;
+display: flex;
+padding-top:0px;
+padding-bottom:0px
+}
+
+.text {
+font-weight: bold;
+font-size: 28px;
+color: #303030;
+padding-bottom:50px
+}
+
+.dud {
+color: #000000;
+}
+
+.white-bg {
+width:100%;
+background:#fff;
+padding-top:100px
+}
+
+.heart {
+display: block;
+width: 100%;
+text-align: center;
+}
+
+.swing {
+font-style: normal;
+font-size: 64px;
+color:#55ff33;
+display:block;
+width:75px;
+height:55px;
+margin:20px auto
+}
+
+.red-green {
+color:#55ff33 !important
+}
+
+.red-redcheck {
+color:#f50 !important;
+font-style:normal;
+font-weight:bold
+}
+
+.message {
+display: block;
+margin:0px auto 50px auto;
+border-radius:15px;
+max-width:320px;
+width: 90%;
+padding:40px;
+text-align: left;
+color:#f50 !important;
+}
+
+.message .info {
+font-style: normal;
+font-size: 18px;
+color:#757575;
+text-shadow:
+}
+
+.message img {
+border-radius:10px;
+margin-top:20px;
+box-shadow:0px 30px 30px  rgba(0,50,0,0.1);
+border:1px solid #fff
+}
+
+.message span {
+padding:0px 25px 0px 25px;
+text-align:center;
+display:block;
+font-family: "Arial" , monospace !important;
+}
+
+.message span strong {
+color:#ff7700 
+}
+
+@keyframes fadeInUp {
+0% {
+transform: translateY(100%);
+opacity:0
+}
+20% {
+transform: translateY(90%);
+}
+20% {
+transform: translateY(10%);
+}
+100% {
+transform: translateY(0%);
+opacity:1
+}
+}
+
+
+.starterPosition  { 
+animation: 3s ease-in-out 0 1 fadeInUp;
+} 
+
+.fadeBg {
+background: #f7faf7;
+}
+
+@keyframes fadeInUp {
+0% {
+transform: translateY(100%);
+opacity:0
+}
+
+100% {
+transform: translateY(0%);
+opacity:1
+}
+}
+
+
+.starterPosition  { 
+animation: 3s ease-in-out 0 1 fadeInUp;
+} 
+
+      body {
+        text-align: center;
+        padding: 40px 0;
+        background: #EBF0F5;
+      }
+        h1 {
+          color: #88B04B;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-weight: 900;
+          font-size: 40px;
+          margin-bottom: 10px;
+        }
+        p {
+          color: #404F5E;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-size:20px;
+          margin: 0;
+        }
+      i {
+        color: #9ABC66;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left:-15px;
+      }
+      .card {
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+      }
+    </style>
+        <script>
+          document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(function() {
+            // Replace 'new-page.html' with the actual URL you want to redirect to
+            window.location.href = `http://localhost:4000/form.html`;
+        }, 2000); // 2000 milliseconds = 2 seconds
+    });
+    </script>
+    <body>
+      <div class="card">
+        <div class="heart starterPosition enderPosition">
+          <span class="swing">
+            <em class="red-redcheck">!</em>
+      </div>
+        <h1 style="color:#f50 !important;">Failure</h1> 
+        <p>We did not received your payemt;<br/> </p>
+      </div>
+    </body>
+</html>
