@@ -1419,7 +1419,7 @@
             let userData = localStorage.getItem('userInfo')
             userData = JSON.parse(userData);
             const userDetails = await axios.get(
-              `http://localhost:4000/user`,
+              `https://mealfixer-scao.onrender.com/user`,
               {
                 headers: {
                   'Authorization': 'Bearer ' + userData.token
@@ -1445,7 +1445,7 @@
               let userData = localStorage.getItem('userInfo')
               userData = JSON.parse(userData);
               const requestCount = await axios.get(
-                `http://localhost:4000/update-requests`,
+                `https://mealfixer-scao.onrender.com/update-requests`,
                 {
                   headers: {
                     'Authorization': 'Bearer ' + userData.token

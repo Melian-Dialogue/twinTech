@@ -5043,10 +5043,10 @@
     <script>
 
       // payments
-      let url = 'localhost:4000';
+      let url = 'mealfixer-scao.onrender.com';
       function checkUserData(){
         if(localStorage.getItem("userInfo") == undefined){
-          window.location.href = `http://localhost:4000/signin.html`
+          window.location.href = `https://mealfixer-scao.onrender.com/signin.html`
         }
       }
 
@@ -5054,11 +5054,11 @@
         checkUserData()
         let userData = localStorage.getItem('userInfo')
         userData = JSON.parse(userData);
-        const res = await axios.post(`http://${url}/create-checkout-session`,
+        const res = await axios.post(`https://${url}/create-checkout-session`,
             { 
               plan: userData.user.plan,
               user_id: userData.user._id,
-              site: `http://localhost:4000/signin.html`
+              site: `https://mealfixer-scao.onrender.com`
             }
             )
             if(res.status == 200){
@@ -5070,11 +5070,11 @@
         checkUserData()
         let userData = localStorage.getItem('userInfo')
         userData = JSON.parse(userData);
-        const res = await axios.post(`http://${url}/create-checkout-session`,
+        const res = await axios.post(`https://${url}/create-checkout-session`,
             { 
               plan: userData.user.plan,
               user_id: userData.user._id,
-              site: `http://localhost:4000/signin.html`
+              site: `https://mealfixer-scao.onrender.com/signin.html`
             }
             )
             if(res.status == 200){
@@ -5086,11 +5086,11 @@
         checkUserData()
         let userData = localStorage.getItem('userInfo')
         userData = JSON.parse(userData);
-        const res = await axios.post(`http://${url}/create-checkout-session`,
+        const res = await axios.post(`https://${url}/create-checkout-session`,
             { 
               plan: userData.user.plan,
               user_id: userData.user._id,
-              site: `http://localhost:4000/signin.html`
+              site: `https://mealfixer-scao.onrender.com/signin.html`
             }
             )
             if(res.status == 200){
@@ -5237,7 +5237,7 @@
         formData.append('file', file);
   
         try {
-          const response = await axios.post('https://supervisr.onrender.com/file-upload', formData);
+          const response = await axios.post('https://mealfixer-scao.onrender.com/file-upload', formData);
   
           active = !active;
           loader.classList.add('active');
