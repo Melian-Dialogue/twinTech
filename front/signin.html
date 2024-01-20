@@ -966,33 +966,34 @@
         verificationResponse.textContent = "Successfully signed in!";
         verificationResponse.style.color = "green";
         verificationResponse.style.margin = "10px 0";
-        // window.location.href = `https://dashboard-headhuntrs.vercel.app/?token=${response.data.token}`;
-        //if paid or is free plan
-        if(!response.data.paid || response.data.plan == 'free'){
-          window.location.href = `https://${url}/form.html`;
-        }else{
-          const res = await axios.post(`https://${url}/create-checkout-session`,
-           { 
-            plan: response.data.user.plan,
-            user_id: response.data.user._id,
-            site: url
-           }
-           )
-           if(res.status == 200){
-            window.location.href = res.data.url
-           }
-        }
+          // window.location.href = `https://dashboard-headhuntrs.vercel.app/?token=${response.data.token}`;
+          //if paid or is free plan
+          console.log(response);
+          if(response.data.paid == true || response.data.plan == 'free'){
+            window.location.href = `https://${url}/form.html`;
+          }else{
+            const res = await axios.post(`https://${url}/create-checkout-session`,
+            { 
+              plan: response.data.user.plan,
+              user_id: response.data.user._id,
+              site: url
+            }
+            )
+            if(res.status == 200){
+              window.location.href = res.data.url
+            }
+          }
 
-      } catch (error) {
-        console.error(error);
-        verifyBtn.removeAttribute('disabled')
-        verifyBtn.style.opacity = 1
-        if (error.response.status == 401) {
-          verificationResponse.style.color = "red";
-          verificationResponse.textContent = "Invalid verification code";
-        } else {
-          verificationResponse.style.color = "red";
-          verificationResponse.textContent = "SERVER ERROR!";
+        } catch (error) {
+          console.error(error);
+          verifyBtn.removeAttribute('disabled')
+          verifyBtn.style.opacity = 1
+          if (error.response.status == 401) {
+            verificationResponse.style.color = "red";
+            verificationResponse.textContent = "Invalid verification code";
+          } else {
+            verificationResponse.style.color = "red";
+            verificationResponse.textContent = "SERVER ERROR!";
           console.error(error.response.status);
         }
       }
