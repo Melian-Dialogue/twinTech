@@ -34,8 +34,8 @@ export const createPayment = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `http://localhost:4000/success.html`,
-      cancel_url: `http://localhost:4000/failure.html`,
+      success_url: `https://mealfixer.onrender.com/success.html`,
+      cancel_url: `https://mealfixer.onrender.com/failure.html`,
     });
     const payment = await Payment.create({
       user_id: order.user_id,
