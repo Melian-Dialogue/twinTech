@@ -590,7 +590,7 @@
             <div class="w-full px-4 md:w-2/3 lg:w-1/2">
               <p>
                 &copy; All rights reserved 2024 | Developed by
-                <a href="https://luqmanshaban,com" target="_blank"
+                <a href="https://luqmanshaban.com" target="_blank"
                   >Luqman Shaban</a
                 >
               </p>
@@ -961,7 +961,7 @@
       verifyBtn.setAttribute('disabled', 'disabled')
       verifyBtn.style.opacity = 0.4
       try {
-        const response = await axios.post(`http://${url}/verify-login`, { username, code })
+        const response = await axios.post(`https://${url}/verify-login`, { username, code })
         console.log(response);
         verificationResponse.textContent = "Successfully signed in!";
         verificationResponse.style.color = "green";
@@ -969,9 +969,9 @@
         // window.location.href = `https://dashboard-headhuntrs.vercel.app/?token=${response.data.token}`;
         //if paid or is free plan
         if(!response.data.paid || response.data.plan == 'free'){
-          window.location.href = `http://${url}/form.html`;
+          window.location.href = `https://${url}/form.html`;
         }else{
-          const res = await axios.post(`http://${url}/create-checkout-session`,
+          const res = await axios.post(`https://${url}/create-checkout-session`,
            { 
             plan: response.data.user.plan,
             user_id: response.data.user._id,
