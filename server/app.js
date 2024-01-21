@@ -9,7 +9,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors({
-    origin: ['*', 'https://mealfixer.onrender.com', 'http://localhost:4000']
+    origin: ['*', 'https://mealfixer.onrender.com', 'http://localhost:4000','https://twintech.onrender.com/']
 }))
 app.use(express.static('../front'));
 app.use(userRouter)
