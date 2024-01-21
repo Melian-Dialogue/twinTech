@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up | Headhuntrs</title>
+    <title>Sign Up | TwinTech</title>
     <link
       rel="shortcut icon"
       href="assets/images/favicon.png"
@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
     <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js" integrity="sha512-ml/QKfG3+Yes6TwOzQb7aCNtJF4PUyha6R3w8pSTo/VJSywl7ZreYvvtUso7fKevpsI+pYVVwnu82YO0q3V6eg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="assets/css/animate.css" />
     <link rel="stylesheet" href="assets/css/tailwind.css" />
 
@@ -299,8 +300,29 @@
                 <img src="./assets/images/logo/logod.png" class="" width="200" alt="">
                </a> -->
               </div>
+               
+              <!-- file picker section -->
+              <div>
+                  <div class="mb-[22px] ">
+                    <input placeholder="Age" type="file" accept=".pdf" 
+                    min="0" maxlength="5000" max="5000" 
+                    class="w-full px-5 py-3 text-base transition bg-transparent border rounded-md outline-none border-stroke dark:border-dark-3 text-body-color dark:text-dark-6 placeholder:text-dark-6 focus:border-primary dark:focus:border-primary focus-visible:shadow-none" 
+                    id="file-p" name="file" required>   
+                  </div>
+                  <button class="border rounded-md font-medium bg-slate-900 p-4 mb-3" type="submit" onclick="readfile()"> submit </button>
+                  <div class="flex justify-center items-center">
+                    <div id="loader" class="loader" style="margin: 10px 0"></div>
+                  </div>
 
-              <form id="loginForm" method="post" class="grid grid-cols-2">
+                <div class="bg-white border h-2 p-2" style="overflow:auto">
+                  <div id="ref-out" class="p-4" style="white-space: pre-wrap;">
+
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- <form id="loginForm" method="post" class="grid grid-cols-2">
 
                 <div class="mb-[22px] ">
                     <input placeholder="Age" type="number" 
@@ -543,9 +565,9 @@
                 <div class="flex justify-center items-center">
                     <div id="loader" class="loader" style="margin: 10px 0"></div>
                 </div>
-            </form>
+            </form> -->
           
-              <p class="mb-4 text-base text-body-secondary">
+              <!-- <p class="mb-4 text-base text-body-secondary">
                 By creating an account you are agree with our
                 <a
                   href="javascript:void(0)"
@@ -560,7 +582,7 @@
                 >
                   Policy
                 </a>
-              </p>
+              </p> -->
 
               <div>
                 <span class="absolute top-1 right-1">
@@ -1331,6 +1353,66 @@
 
     <script>
 
+      const loader = document.getElementById("loader");
+      loader.style.display = "none";
+
+// document.getElementById('file-p')
+//             .addEventListener('change', function () {
+ 
+//                 let fr = new FileReader();
+//                 fr.onload = function (e) {
+//                   // console.log("...res",fr.result);
+//                   //   document.getElementById('ref-out')
+//                   //       .textContent = fr.result;
+                  
+//                   readfile(e.target.result);
+                
+//                 }
+ 
+//                 fr.readAsBinaryString(this.files[0]);
+//             })
+      
+      var responseFromApi = '';
+      async function readfile(){
+        const fileInput = document.getElementById('file-p');
+        const file = fileInput.files[0];
+        
+        const formData = new FormData();
+        formData.append('pdfFile', file);
+        try {
+          loader.style.display = "block";
+          const response = await axios.post('http://localhost:4000/upload', formData);
+
+          const dec = await axios.post('https://kevkibe-twintech.onrender.com/twintech/job_recommendation',
+        {
+          resume: response.data
+        })
+        // document.getElementById('ref-out').textContent = dec.data.result;
+          responseFromApi = dec.data.result;
+          typeWriter();
+          loader.style.display = "none";
+          // console.log(dec.data.result);
+
+          // console.log('Server response:', response.data);
+        } catch (error) {
+          loader.style.display = "none";
+          console.error('Error uploading file:', error.message);
+        }
+      }
+
+      
+      var i = 0;
+      var speed = 20;
+      
+
+      function typeWriter() {
+        if (i < responseFromApi.length) {
+          document.getElementById("ref-out").innerHTML += responseFromApi.charAt(i);
+          i++;
+          setTimeout(typeWriter, speed);
+        }
+      }
+      
 
       const setupRangeInput = (inputId, outputId, ty) => {
       const
@@ -1356,7 +1438,6 @@
 
 
       // end scroll
-      const loader = document.getElementById("loader");
       const response = document.getElementById("response");
       let foods = []
 

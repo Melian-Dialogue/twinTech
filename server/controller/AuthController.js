@@ -4,9 +4,34 @@ import Jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import dotenv from 'dotenv'
 import Payment from "../model/Payment.js";
+import PDFParser from 'pdf2json'
+
 
 let currentSite = "";
 dotenv.config({path: "../.env"});
+
+const upload = async (req,res,next)=>{
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+
+  // Extract text from the PDF file
+  const pdfData = req.file.buffer;
+  const pdfParser = new PDFParser();
+
+  pdfParser.on('pdfParser_dataReady', pdfData => {
+  
+    const text = pdfData.Pages.map(page => page.Texts.map(text => text.R.map(r => r.T).join('')).join('')).join(' ');
+    res.send(text);
+  });
+
+  pdfParser.parseBuffer(pdfData);
+
+  pdfParser.on('pdfParser_dataError', errData => {
+    console.error('Error parsing PDF file:', errData);
+    res.status(500).send('Error parsing PDF file.');
+  });
+}
 
 const signup = async (req, res, next) => {
   const { username, email, password, project, site, plan } = req.body;
@@ -238,4 +263,4 @@ const updateRequests = async (req, res) => {
   }
 };
 
-export { login, signup, getUserDetails, verifyEmail, verifyLoginCode, updateRequests };
+export { login, signup, getUserDetails, verifyEmail, verifyLoginCode, updateRequests, upload };
