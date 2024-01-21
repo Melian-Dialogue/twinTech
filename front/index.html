@@ -184,6 +184,15 @@
                       Home
                     </a>
                   </li>
+                  <li class="group relative" id="isLoged">
+                    <a
+                      href="./form.html"
+                      onclick="tofrom()"
+                      class="ud-menu-scroll mx-8 flex py-2 text-base font-medium text-dark group-hover:text-primary dark:text-white lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70"
+                    >
+                      Advice
+                    </a>
+                  </li>
                   <li class="group relative">
                     <a
                       href="#about"
@@ -5042,39 +5051,45 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
 
+      // is logged
+      let userDatails = localStorage.getItem('userInfo')
+      userDatails = JSON.parse(userDatails);
+      let showForm = document.getElementById('isLoged')
+      
+      if(!userDatails){
+        showForm.hidden = true
+      }
+      
+   
       // payments
-      let url = 'mealfixer-scao.onrender.com';
+      // let url = 'https://mealfixer-scao.onrender.com';
+      let url = 'http://localhost:4000';
       function checkUserData(){
         if(localStorage.getItem("userInfo") == undefined){
-          window.location.href = `https://mealfixer-scao.onrender.com/signin.html`
+          window.location.href = `${url}/signin.html`
         }
+        
       }
 
       async function price_1(){
-        checkUserData()
-        let userData = localStorage.getItem('userInfo')
-        userData = JSON.parse(userData);
-        const res = await axios.post(`https://${url}/create-checkout-session`,
-            { 
-              plan: userData.user.plan,
-              user_id: userData.user._id,
-              site: `https://mealfixer-scao.onrender.com`
-            }
-            )
-            if(res.status == 200){
-              window.location.href = res.data.url
-            }
+
+        if(localStorage.getItem("userInfo") == undefined){
+          window.location.href = `${url}/signin.html`
+        }else{
+          window.location.href = `${url}/form.html`
+        }
+        
       }
 
       async function price_2(){
         checkUserData()
         let userData = localStorage.getItem('userInfo')
         userData = JSON.parse(userData);
-        const res = await axios.post(`https://${url}/create-checkout-session`,
+        const res = await axios.post(`${url}/create-checkout-session`,
             { 
               plan: userData.user.plan,
               user_id: userData.user._id,
-              site: `https://mealfixer-scao.onrender.com/signin.html`
+              site: `${url}`
             }
             )
             if(res.status == 200){
@@ -5086,16 +5101,21 @@
         checkUserData()
         let userData = localStorage.getItem('userInfo')
         userData = JSON.parse(userData);
-        const res = await axios.post(`https://${url}/create-checkout-session`,
+        const res = await axios.post(`${url}/create-checkout-session`,
             { 
               plan: userData.user.plan,
               user_id: userData.user._id,
-              site: `https://mealfixer-scao.onrender.com/signin.html`
+              site: `${url}`
             }
             )
             if(res.status == 200){
               window.location.href = res.data.url
             }
+      }
+
+       //move to form
+      function tofrom(){
+        window.location.href = `${url}/form.html`
       }
 
 
@@ -5237,7 +5257,7 @@
         formData.append('file', file);
   
         try {
-          const response = await axios.post('https://mealfixer-scao.onrender.com/file-upload', formData);
+          const response = await axios.post(`${url}/file-upload`, formData);
   
           active = !active;
           loader.classList.add('active');

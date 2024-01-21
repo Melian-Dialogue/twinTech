@@ -129,22 +129,6 @@
                       Contact
                     </a>
                   </li>
-                  <li class="relative group">
-                    <a
-                      href="signin.html"
-                      class="flex py-2 mx-8 text-base font-medium ud-menu-scroll text-dark dark:text-white group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0 lg:text-body-color dark:lg:text-dark-6 xl:ml-10"
-                    >
-                      Login
-                    </a>
-                  </li>
-                  <li class="relative group">
-                    <a
-                      href="signup.html"
-                      class="flex py-2 mx-8 text-base font-medium ud-menu-scroll text-dark dark:text-white group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0 lg:text-body-color dark:lg:text-dark-6 xl:ml-10"
-                    >
-                      Sign Up
-                    </a>
-                  </li>
                 </ul>
               </nav>
             </div>
@@ -256,7 +240,7 @@
               <h1
                 class="mb-4 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]"
               >
-                Meal plan generator
+              Recruitment Portal
               </h1>
 
               <ul class="flex items-center justify-center gap-[10px]">
@@ -274,7 +258,7 @@
                     class="flex items-center gap-[10px] text-base font-medium text-body-color"
                   >
                     <span class="text-body-color dark:text-dark-6"> / </span>
-                    plan generator
+                    Recruitment Portal
                   </a>
                 </li>
               </ul>
@@ -1356,6 +1340,9 @@
       const loader = document.getElementById("loader");
       loader.style.display = "none";
 
+      //API-Url
+      const ApiUrl =  'http://localhost:4000'
+
 // document.getElementById('file-p')
 //             .addEventListener('change', function () {
  
@@ -1381,7 +1368,7 @@
         formData.append('pdfFile', file);
         try {
           loader.style.display = "block";
-          const response = await axios.post('http://localhost:4000/upload', formData);
+          const response = await axios.post(`${ApiUrl}/upload`, formData);
 
           const dec = await axios.post('https://kevkibe-twintech.onrender.com/twintech/job_recommendation',
         {
@@ -1529,7 +1516,7 @@
             let userData = localStorage.getItem('userInfo')
             userData = JSON.parse(userData);
             const userDetails = await axios.get(
-              `https://mealfixer-scao.onrender.com/user`,
+              `${ApiUrl}/user`,
               {
                 headers: {
                   'Authorization': 'Bearer ' + userData.token
@@ -1555,7 +1542,7 @@
               let userData = localStorage.getItem('userInfo')
               userData = JSON.parse(userData);
               const requestCount = await axios.get(
-                `https://mealfixer-scao.onrender.com/update-requests`,
+                `${ApiUrl}/update-requests`,
                 {
                   headers: {
                     'Authorization': 'Bearer ' + userData.token
