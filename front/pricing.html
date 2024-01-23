@@ -377,7 +377,7 @@
                 </div>
               </div>
               <a
-                href="javascript:price_2()"
+                href="javascript:price_1()"
                 class="inline-block rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white transition hover:bg-blue-dark"
               >
                 Purchase Now
@@ -432,7 +432,7 @@
                 </div>
               </div>
               <a
-                href="javascript:void(0)"
+                href="javascript:price_2()"
                 class="inline-block rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white transition hover:bg-blue-dark"
               >
                 Purchase Now
@@ -488,7 +488,7 @@
                 </div>
               </div>
               <a
-                href="javascript:void(0)"
+                href="javascript:price_3()"
                 class="inline-block rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white transition hover:bg-blue-dark"
               >
                 Purchase Now
@@ -1018,38 +1018,34 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
 
-      // payment options
-      // const url = 'localhost:4000'
+    // payment options
+    //   const url = 'http://localhost:4000'
       const url = 'https://twintech.onrender.com'
 
       function checkUserData(){
-        if(!sessionStorage.getItem("userData")){
+        if(!localStorage.getItem("userInfo")){
           window.location.href = `${url}/signin.html`
         }
       }
 
       async function price_1(){
-        checkUserData()
-        let userData = sessionStorage.getItem('user')
-        const res = await axios.post(`https://${url}/create-checkout-session`,
-            { 
-              plan: userData.user.plan,
-              user_id: userData.user._id,
-              site: url
-            }
-            )
-            if(res.status == 200){
-              window.location.href = res.data.url
-            }
+        if(localStorage.getItem("userInfo") == undefined){
+          window.location.href = `${url}/signin.html`
+        }else{
+          window.location.href = `${url}/form.html`
+        }
+        
       }
 
       async function price_2(){
         checkUserData()
-        const res = await axios.post(`https://${url}/create-checkout-session`,
+        let userData = localStorage.getItem('userInfo')
+        userData = JSON.parse(userData);
+        const res = await axios.post(`${url}/create-checkout-session`,
             { 
               plan: userData.user.plan,
               user_id: userData.user._id,
-              site: url
+              site: `${url}`
             }
             )
             if(res.status == 200){
@@ -1059,11 +1055,13 @@
 
       async function price_3(){
         checkUserData()
-        const res = await axios.post(`https://${url}/create-checkout-session`,
+        let userData = localStorage.getItem('userInfo')
+        userData = JSON.parse(userData);
+        const res = await axios.post(`${url}/create-checkout-session`,
             { 
               plan: userData.user.plan,
               user_id: userData.user._id,
-              site: url
+              site: `${url}`
             }
             )
             if(res.status == 200){
@@ -1086,33 +1084,33 @@
       });
 
       // section menu active
-      function onScroll(event) {
-        const sections = document.querySelectorAll(".ud-menu-scroll");
-        const scrollPos =
-          window.pageYOffset ||
-          document.documentElement.scrollTop ||
-          document.body.scrollTop;
+    //   function onScroll(event) {
+    //     const sections = document.querySelectorAll(".ud-menu-scroll");
+    //     const scrollPos =
+    //       window.pageYOffset ||
+    //       document.documentElement.scrollTop ||
+    //       document.body.scrollTop;
 
-        for (let i = 0; i < sections.length; i++) {
-          const currLink = sections[i];
-          const val = currLink.getAttribute("href");
-          const refElement = document.querySelector(val);
-          const scrollTopMinus = scrollPos + 73;
-          if (
-            refElement.offsetTop <= scrollTopMinus &&
-            refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
-          ) {
-            document
-              .querySelector(".ud-menu-scroll")
-              .classList.remove("active");
-            currLink.classList.add("active");
-          } else {
-            currLink.classList.remove("active");
-          }
-        }
-      }
+    //     for (let i = 0; i < sections.length; i++) {
+    //       const currLink = sections[i];
+    //       const val = currLink.getAttribute("href");
+    //       const refElement = document.querySelector(val);
+    //       const scrollTopMinus = scrollPos + 73;
+    //       if (
+    //         refElement.offsetTop <= scrollTopMinus &&
+    //         refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
+    //       ) {
+    //         document
+    //           .querySelector(".ud-menu-scroll")
+    //           .classList.remove("active");
+    //         currLink.classList.add("active");
+    //       } else {
+    //         currLink.classList.remove("active");
+    //       }
+    //     }
+    //   }
 
-      window.document.addEventListener("scroll", onScroll);
+    //   window.document.addEventListener("scroll", onScroll);
 
       // Testimonial
       const testimonialSwiper = new Swiper(".testimonial-carousel", {
@@ -1141,7 +1139,7 @@
         },
       });
     </script>
-   <script>
+   <!-- <script>
     const fileForm = document.getElementById('fileForm');
     const loader = document.getElementById('loader');
     const uploadBtn = document.getElementById('uploadBtn');
@@ -1247,7 +1245,7 @@
     });
       
 
-  </script>
+  </script> -->
   
   </body>
 </html>

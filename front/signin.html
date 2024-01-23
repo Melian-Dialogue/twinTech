@@ -972,8 +972,9 @@
           localStorage.setItem("userInfo",JSON.stringify(response.data))
           
           
-          if(response.data.paid == false ){
-            window.location.href = `${url}/index.html#pricing`;
+          if(localStorage.getItem("hasJustSignedUp") == "true"){
+            localStorage.removeItem("hasJustSignedUp")
+            window.location.href = `${url}/pricing.html`;
           }else{
             window.location.href = `${url}/form.html`;
           }
