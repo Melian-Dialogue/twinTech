@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const stripe = new Stripe(
-  "sk_test_51OaXpeDgHezqQ0kofel67ImiykUrh1NZlDTIlsXAaxx1bgyJxQuoaRRBdSIU2QqqSsQToI2Hoefeorpmtt3SnVft00k7kWwDBA"
+  `${process.env.STRIPE_PRIVATE_KEY}`
 );
 
 // export const getPayment = async (r)
@@ -35,8 +35,8 @@ export const createPayment = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `https://mealfixer-scao.onrender.com/success`,
-      cancel_url: `https://mealfixer-scao.onrender.com/cancel`,
+      success_url: `${process.env.LINK_DEV}/success`,
+      cancel_url: `${process.env.LINK_DEV}/cancel`,
     });
     const payment = await Payment.create({
       user_id: order.user_id,
