@@ -1081,7 +1081,7 @@
       loader.style.display = "none";
 
       //API-Url
-      const ApiUrl =  'http://92.205.21.181:4004'
+      const ApiUrl =  'https://twintech-ewbt.onrender.com'
       // const ApiUrl =  'https://twintech.onrender.com'
 
 // document.getElementById('file-p')
@@ -1111,7 +1111,7 @@
           loader.style.display = "block";
           const response = await axios.post(`${ApiUrl}/upload`, formData);
 
-          const dec = await axios.post('https://kevkibe-twintech.onrender.com/twintech/job_recommendation',
+          const dec = await axios.post('https://twintech-backend.onrender.com/job_recommendation',
         {
           resume: response.data
         })
